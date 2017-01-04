@@ -18,7 +18,10 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.implicitly_wait(3)
 
         #网址标题是否包含'To-Do'
+        # print(self.browser.title)
+        # import pdb;pdb.set_trace()
         self.assertIn('To-Do', self.browser.title)
+        self.fail('Finish the test')
 
 if __name__ == '__main__':
     unittest.main()
