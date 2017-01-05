@@ -49,7 +49,7 @@ class NewVisitorTest(unittest.TestCase):
         # 页面中又显示了一个文本框，可以输入其它待办事项
         # 她输入 "User peocock feathers to make a fly"
         inputbox = self.browser.find_element_by_id('id_new_item')
-        inputbox.send_keys('User peacok feathers to make a fly')
+        inputbox.send_keys('User peacock feathers to make a fly')
         # 她按回车，页面更新
         inputbox.send_keys(Keys.ENTER)
 
