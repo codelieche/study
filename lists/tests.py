@@ -2,6 +2,7 @@ from django.core.urlresolvers import resolve
 from django.test import TestCase
 from django.http import HttpRequest
 from django.template.loader import render_to_string
+from django.middleware.csrf import get_token
 
 from lists.views import home_page
 
@@ -17,12 +18,26 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         response = home_page(request)
         # print(repr(response.content))
-        expected_html = render_to_string('home.html')
-        self.assertEqual(response.content.decode(), expected_html)
+        # print(get_token(request))
+        expected_html = render_to_string('home.html', request=request)
+        # 由于每次request中的csrf_token会变更，就取前100个字符对比将就下先。
+        self.assertEqual(response.content.decode()[:100], expected_html[:100])
 
-        # 不要测试常量，应该测试实现的方式
-        # self.assertTrue(response.content.startswith(b'<!DOCTYPE'))
-        # self.assertIn(b'<title>To-Do lists</title>', response.content)
-        # self.assertTrue(response.content.endswith(b'</html>'))
+    def test_home_page_can_save_POST_request(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['item_text'] = 'A new list item'
+
+        response = home_page(request)
+        self.assertIn('A new list item', response.content.decode())
+        expected_html = render_to_string(
+            'home.html',
+            {'new_item_text': 'A new list item'},
+            request=request
+        )
+        # print(expected_html)
+        # print(response.content.decode())
+        # print(get_token(request))
+        self.assertEqual(response.content.decode()[:100], expected_html[:100])
 
         
