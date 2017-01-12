@@ -2,12 +2,13 @@
 '''
 function test
 '''
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 import time
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(1)
@@ -22,7 +23,8 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # 打开网址首页
-        self.browser.get('http://localhost:8000')
+        print(self.live_server_url)
+        self.browser.get(self.live_server_url)
 
         #网址标题,头部 是否包含'To-Do'
         # import pdb;pdb.set_trace()
@@ -58,6 +60,3 @@ class NewVisitorTest(unittest.TestCase):
         self.check_for_row_in_list_table('2: User peacock feathers to make a fly')
 
         self.fail('Finish the test')
-
-if __name__ == '__main__':
-    unittest.main()
