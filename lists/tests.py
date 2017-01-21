@@ -25,52 +25,6 @@ class HomePageTest(TestCase):
         # 由于每次request中的csrf_token会变更，就取前100个字符对比将就下先。
         self.assertEqual(response.content.decode()[:100], expected_html[:100])
 
-    def test_home_page_can_save_a_POST_request(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = 'A new list item'
-
-        response = home_page(request)
-
-        self.assertEqual(Item.objects.count(), 1)
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, 'A new list item')
-
-        self.assertEqual(response.status_code, 302)
-        # self.assertEqual(response['location'], '/')
-
-        # self.assertIn('A new list item', response.content.decode())
-        # expected_html = render_to_string(
-        #     'home.html',
-        #     {'new_item_text': 'A new list item'},
-        #     request=request
-        # )
-        # self.assertEqual(response.content.decode()[:100], expected_html[:100])
-
-    def test_home_page_redirects_after_POST(self):
-        request = HttpRequest()
-        request.method = 'POST'
-        request.POST['item_text'] = 'A new List item'
-
-        response = home_page(request)
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
-
-    def test_home_page_only_saves_items_when_necessary(self):
-        request = HttpRequest()
-        home_page(request)
-        self.assertEqual(Item.objects.count(), 0)
-    
-    # def test_home_page_displays_all_list_items(self):
-    #     Item.objects.create(text='itemey 1')
-    #     Item.objects.create(text='itemey 2')
-
-    #     request = HttpRequest()
-    #     response = home_page(request)
-
-    #     self.assertIn('itemey 1', response.content.decode())
-    #     self.assertIn('itemey 2', response.content.decode())
 
     
 
@@ -109,3 +63,35 @@ class ListViewTest(TestCase):
         self.assertContains(response, 'itemey 1')
         self.assertContains(response, 'itemey 2')
 
+class NewListTest(TestCase):
+
+    def test_saving_a_POST_request(self):
+        # request = HttpRequest()
+        # request.method = 'POST'
+        # request.POST['item_text'] = 'A new list item'
+
+        # response = home_page(request)
+        self.client.post(
+            '/lists/new',
+            data={'item_text': 'A new list item'}
+        )
+
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, 'A new list item')
+
+    def test_redirects_after_POST(self):
+        # request = HttpRequest()
+        # request.method = 'POST'
+        # request.POST['item_text'] = 'A new List item'
+
+        # response = home_page(request)
+
+        response = self.client.post(
+            '/lists/new',
+            data={'item_text': 'A new list item'}
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+        self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
