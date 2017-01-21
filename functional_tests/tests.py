@@ -97,4 +97,4 @@ class NewVisitorTest(LiveServerTestCase):
 
         # 两个人都很满意，去睡觉了
 
-        self.fail('Finish the test')
+        # self.fail('Finish the test')
