@@ -16,13 +16,10 @@ env.hosts = ['192.168.0.121']
 SITE_NAME = 'test.tdd.staging.codelieche.com'
 
 def deploy():
-    
-    # env.host = 'happy@192.168.0.121'
+
     SERVER_ADDRESS = 'test.tdd.staging.codelieche.com'
-    # env.host = 'test.tdd.staging.codelieche.com'
     site_folder = '/home/%s/sites/%s' % (env.user, SERVER_ADDRESS)
     source_folder = site_folder + '/source'
-    # exists(site_folder)
 
     # 第1步: 创建目录结构
     _create_directory_structure_if_necessary(site_folder)
@@ -65,8 +62,12 @@ def deploy_settings():
             ' sed "s/USERNAME/happy/g" | sudo tee /etc/supervisor/conf.d/tdd_django.conf' % (
                 SITE_NAME,))
 
+def reload():
+    run('sudo supervisorctl restart tdd_django')
+
 def hello():
-    print('Hello fab!' )
+    print('Hello fab!')
+
 
 
 
