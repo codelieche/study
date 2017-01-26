@@ -18,13 +18,13 @@ sudo pip3 install virtualenv
 ## 配置Nginx虚拟机
 - 参考nginx.template.conf
 - 把SITENAME替换成所需的域名，例如：staging.my-domain.com
-- 把USER替换成所需的用户名
+- 把USERNAME替换成所需的用户名
 
 ## Upstart任务
 
 - 参考gunicorn-upstart.template.conf
 - 把SITENAME替换成所需的域名，例如：staging.my-domian.com
-- 把USER替换成所需的用户名
+- 把USERNAME替换成所需的用户名
 
 ## 文件夹结构：
 
