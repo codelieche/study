@@ -1,8 +1,7 @@
 #coding:utf8
-from fabric.contrib.files import append, exists, sed
-from fabric.api import env, local, run
+# from fabric.contrib.files import append, exists, sed
+from fabric.api import env, run
 from fabric.context_managers import cd
-import random
 
 from deploy_jobs import _create_directory_structure_if_necessary
 from deploy_jobs import _get_latest_source
@@ -19,10 +18,12 @@ def deploy():
 
     SERVER_ADDRESS = 'test.tdd.staging.codelieche.com'
     site_folder = '/home/%s/sites/%s' % (env.user, SERVER_ADDRESS)
+    # site_folder = '/data/www/%s' %(SERVER_ADDRESS)
     source_folder = site_folder + '/source'
 
     # 第1步: 创建目录结构
     _create_directory_structure_if_necessary(site_folder)
+    return
     # 第2步：拉取最新源码
     _get_latest_source(source_folder)
     # 第3步：修改项目配置信息
@@ -67,8 +68,3 @@ def reload():
 
 def hello():
     print('Hello fab!')
-
-
-
-
-

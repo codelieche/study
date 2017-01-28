@@ -10,7 +10,11 @@ REPO_URL = 'https://github.com/codelieche/tdd_django.git'
 def _create_directory_structure_if_necessary(site_folder):
     '''创建发布项目的文件目录'''
     for subfolder in ('database', 'static', 'virtualenv', 'source', 'logs'):
-        run('mkdir -p %s/%s' % (site_folder, subfolder))
+        folder = '%s/%s' % (site_folder, subfolder)
+        if not exists(folder):
+            run('mkdir -p %s' % folder)
+        else:
+            print('目录已经存在: %s' % folder)
 
 
 def _get_latest_source(source_folder):
