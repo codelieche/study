@@ -21,8 +21,13 @@ class ItemForm(forms.models.ModelForm):
             'text': forms.fields.TextInput(attrs={
                 'placeholder': 'Enter a to-do item',
                 'class': 'form-control input-lg',
+                'required': False,
             }),
         }
         error_messages = {
             'text': {'required': EMPTY_LIST_ERROR}
         }
+    
+    # def __init__(self, *args, **kwargs):
+        # super(ItemForm, self).__init__(*args, **kwargs)
+        # self.fields['text'].required = False

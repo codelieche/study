@@ -21,7 +21,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('To-Do', header_text)
 
         # 应用邀请她她输入一个代办事项
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Enter a to-do item'
@@ -43,7 +43,7 @@ class NewVisitorTest(FunctionalTest):
 
         # 页面中又显示了一个文本框，可以输入其它待办事项
         # 她输入 "User peocock feathers to make a fly"
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('User peacock feathers to make a fly')
         # 她按回车，页面更新
         inputbox.send_keys(Keys.ENTER)
@@ -68,7 +68,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertNotIn('make a fly', page_text)
 
         # 弗朗西斯输入一个新的待办事项，新建一个清单
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
 
