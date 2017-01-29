@@ -7,23 +7,18 @@ from django.utils.html import escape
 
 from lists.models import Item, List
 from lists.views import home_page
+from lists.forms import ItemForm
 
 # Create your tests here.
 class HomePageTest(TestCase):
 
-    def test_root_url_resolves_to_home_page_view(self):
-        found = resolve('/')
-        # print(found)
-        self.assertEqual(found.func, home_page)
-    
-    def test_home_page_returns_correct_html(self):
-        request = HttpRequest()
-        response = home_page(request)
-        # print(repr(response.content))
-        # print(get_token(request))
-        expected_html = render_to_string('home.html', request=request)
-        # 由于每次request中的csrf_token会变更，就取前100个字符对比将就下先。
-        self.assertEqual(response.content.decode()[:100], expected_html[:100])
+    def test_home_page_renders_home_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
+
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
 
     
