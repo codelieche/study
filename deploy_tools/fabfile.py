@@ -23,7 +23,6 @@ def deploy():
 
     # 第1步: 创建目录结构
     _create_directory_structure_if_necessary(site_folder)
-    return
     # 第2步：拉取最新源码
     _get_latest_source(source_folder)
     # 第3步：修改项目配置信息
