@@ -6,6 +6,11 @@ class Item(models.Model):
     text = models.TextField(max_length=200, default='', blank=False)
     list = models.ForeignKey(to='List', default=None)
     
+    def __str__(self):
+        return self.text
+    
+    class Meta:
+        unique_together = ('list', 'text')
 
 class List(models.Model):
     pass
