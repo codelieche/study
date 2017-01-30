@@ -13,7 +13,7 @@ from .models import Item
 #     )
 
 EMPTY_LIST_ERROR = "You can't have an empty list item"
-DUPLICATE_ITEM_ERROR = "You're alreay got this in your list"
+DUPLICATE_ITEM_ERROR = "You're already got this in your list"
 
 class ItemForm(forms.models.ModelForm):
 
