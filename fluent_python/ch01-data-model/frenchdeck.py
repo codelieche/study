@@ -39,6 +39,20 @@ class FrenchDeck:
         return self._cards[position]
 
 
+# 根据黑红梅方排序，由大到小
+suite_values = dict(spades=3, hearts=2, diamonds=1, clubs=0)
+
+# 定义复合序号算法
+def card_spade_high(card):
+    # 相同数值的拍，黑色最大
+    # 先获取rank的索引序号
+    # [2, 3, 4, 5, 6, 7, 8.... J, K, Q, A]
+    rank_value = FrenchDeck.ranks.index(card.rank)
+    # 每个大小的牌有4个花色，那么复合序号就是，4 * n + 花色序号value
+    index_value = rank_value * len(suite_values) + suite_values[card.suit]
+    return index_value
+
+
 if __name__ == "__main__":
     # nametuple simple demo
     # demo_01()
@@ -50,4 +64,8 @@ if __name__ == "__main__":
     print(obj[-1])  # Card(rank='A', suit='diamonds')
     # print(obj[55])  # IndexError: list index out of range
 
-
+    # 对一系列牌进行排序
+    # 根据card_spade_high含税对deck进行排序
+    deck = FrenchDeck()
+    for card in sorted(deck, key=card_spade_high):
+        print(card)
