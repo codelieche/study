@@ -138,7 +138,7 @@ for card in sorted(deck, key=card_spade_high):
 
 ## 1.2：如何使用特殊方法
 
-### 一个简单的二维向量
+### 1.2.1: 一个简单的二维向量
 > Vector的`+`、`-`、`*`、`abs`等方法是用特殊方法实现的：`__repr__`、`__abs__`、`__add__`和`__mul__`。
 
 ```python
@@ -152,7 +152,7 @@ class Vector:
         self.y = y
 
     def __repr__(self):
-        # obj显示的会是 Vector(x, y)，而不是<__main__.Vector instance at 0x107b9b3f8>
+        # obj显示的会是 Vector(x, y)，而不是<Vector instance at 0x107b9b3f8>
         return 'Vector({}, {})'.format(self.x, self.y)
 
     def __abs__(self):
@@ -187,3 +187,21 @@ Vector(20, 24)
 >>> print(v1)
 Vector(5, 6)
 ```
+
+### 1.2.2 字符串表示形式
+> 内置函数`repr`,能把一个对象用字符串的形式表达出来以便辨认，这就是**字符串表示形式**。
+ `repr`是用`__repr__`方法实现的。
+
+`__repr__`和`__str__`的区别：
+`__str__`是在`str()`函数被使用，或是在`print`函数打印一个对象的时候才被调用，
+并且它返回的字符串对终端用户更友好。如果2个中实现一个，推荐`__repr__`。没有`__str__`会用`__repr__`代替。
+
+### 1.2.3 算数运算符
+> `__add__`和`__mul__`，可以对前面的`Vector`带来`+`和`*`这两个算数运算符。
+
+### 1.2.4 自定义布尔值
+> `if`, `while`语句，或者`and`、`or`和`not`运算符。为了判定一个值`x`是真还是假，
+Python会调用`bool(x)`，这个函数只能返回`True`或者`False`。
+`bool(x)`的背后是调用`x.__bool__()`的结果，如果不存在`__bool__`方法，那么`bool(x)`会尝试调用`x.__len__()`。
+若返回0，则bool会返回False; 否则返回True。
+默认情况下，我们自定义的类的实例总是返回真的，除非我们自己实现了`__bool__`或者`__len__`方法。

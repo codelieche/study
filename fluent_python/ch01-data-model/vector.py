@@ -13,7 +13,7 @@ class Vector:
         self.y = y
 
     def __repr__(self):
-        # obj显示的会是 Vector(x, y)，而不是<__main__.Vector instance at 0x107b9b3f8>
+        # obj显示的会是 Vector(x, y)，而不是<Vector instance at 0x107b9b3f8>
         return 'Vector({}, {})'.format(self.x, self.y)
 
     def __abs__(self):
