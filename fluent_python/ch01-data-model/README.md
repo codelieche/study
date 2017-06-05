@@ -205,3 +205,33 @@ Python会调用`bool(x)`，这个函数只能返回`True`或者`False`。
 `bool(x)`的背后是调用`x.__bool__()`的结果，如果不存在`__bool__`方法，那么`bool(x)`会尝试调用`x.__len__()`。
 若返回0，则bool会返回False; 否则返回True。
 默认情况下，我们自定义的类的实例总是返回真的，除非我们自己实现了`__bool__`或者`__len__`方法。
+
+## 1.3：特殊方法一览
+
+### 跟运算符无关的特殊方法
+
+类名  |   方法名
+----  |  ----
+字符串/字节序列表示形式    |   `__repr__、__str__、__format__、__bytes__`
+数值转换    |   `__abs__、__bool__、__complex__、__int__、__float__、__hash__、__index__`
+集合模拟    |   `__len__、__getitem__、__setitem__、__delitem__、__contains__`
+迭代枚举    |   `__iter__、__reversed__、__next__`
+可调用模拟   |   `__call__`
+上下文管理器  |   `__enter__、__exit__`
+实例创建和销毁 |   `__new__、__init__、__del__`
+属性管理器   |   `__getattr__、__getattribute__、__setattr__、__delattr__、__dir__`
+属性描述符   |   `__get__、__set__、__delete__`
+跟类相关的服务 |   `__prepare__、__instancecheck__、__subclasscheck__`
+
+### 跟运算符相关的特殊方法
+
+类名  |   方法名和对应的运算符
+----  |  ----
+一元运算符   |   `__neg__ - 、__pos__ + 、__abs__ abs()`
+众多比较运算符 |   `__lt__ <、__le__ <= 、__eq__ == 、__gt__ > 、__ge__ >=`
+算术运算符   |   `__add__ + 、__sub__ - 、__mul__ * 、__truediv__ / 、__floordiv__ // 、__mod__ % 、__divmod__ divmod() 、__pow__ **或pow() 、__round__ round()`
+反向算术运算符 |   `__radd__、__rsub__、__rmul__、__rtrudiv__、__rfloordiv__、__rmod__、__rdivmod__`
+增量赋值算术运算符   |   `__iadd__、__isub__、__imul__、__itruediv__、__ifloordiv__、__imod__、__ipow__`
+位运算符    |   `__invert__ ~ 、__lshift__ << 、__rshift__ >> 、__and__ & 、__or__ | 、 __xor__ ^`
+反向位运算符   |   `__rlshift__、__rrshift__、__rand__、__rxor__、__row__`
+增量赋值位运算符    |   `__ilshift__、__irshift__、__iand__、__ixor__、__ior__`
