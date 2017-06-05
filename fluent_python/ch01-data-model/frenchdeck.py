@@ -42,6 +42,7 @@ class FrenchDeck:
 # 根据黑红梅方排序，由大到小
 suite_values = dict(spades=3, hearts=2, diamonds=1, clubs=0)
 
+
 # 定义复合序号算法
 def card_spade_high(card):
     # 相同数值的拍，黑色最大
@@ -65,7 +66,7 @@ if __name__ == "__main__":
     # print(obj[55])  # IndexError: list index out of range
 
     # 对一系列牌进行排序
-    # 根据card_spade_high含税对deck进行排序
+    # 根据card_spade_high函数对deck进行排序
     deck = FrenchDeck()
     for card in sorted(deck, key=card_spade_high):
         print(card)

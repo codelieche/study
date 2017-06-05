@@ -1,5 +1,6 @@
-## 第一章：数据模型
+# 第一章：数据模型
 
+## 1.1：一摞Python风格的纸牌
 ### nametuple
 > 当我们使用元组`user = ("Jim", 20)`获取名字使用`user[0]`,年龄`user[1]`。
 虽然这样获取属性也ok，但是0、1还是不够语义化，我们想通过`user.age`，`user.name`获取年龄和名字的属性。
@@ -127,9 +128,62 @@ def card_spade_high(card):
     # 每个大小的牌有4个花色，那么复合序号就是，4 * n + 花色序号value
     index_value = rank_value * len(suite_values) + suite_values[card.suit]
 
-# 根据card_spade_high含税对deck进行排序
+# 根据card_spade_high函数对deck进行排序
 deck = FrenchDeck()
 for card in sorted(deck, key=card_spade_high):
     print(card) 
 ```
-    
+
+----
+
+## 1.2：如何使用特殊方法
+
+### 一个简单的二维向量
+> Vector的`+`、`-`、`*`、`abs`等方法是用特殊方法实现的：`__repr__`、`__abs__`、`__add__`和`__mul__`。
+
+```python
+
+from math import hypot
+# hypot 是求三角形的斜边长
+
+class Vector:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        # obj显示的会是 Vector(x, y)，而不是<__main__.Vector instance at 0x107b9b3f8>
+        return 'Vector({}, {})'.format(self.x, self.y)
+
+    def __abs__(self):
+        return hypot(self.x, self.y)
+
+    def __bool__(self):
+        return bool(abs(self))
+
+    def __add__(self, other):
+        x = self.x + other.x
+        y = self.y + other.y
+        return Vector(x, y)
+
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+```
+
+测试：
+
+```
+>>> from vector import Vector
+>>> v1 = Vector(5, 6)
+>>> v2 = Vector(3, 4)
+>>> v1 + v2
+Vector(8, 10)
+>>> v1 * 4
+Vector(20, 24)
+>>> abs(v1)
+7.810249675906654
+>>> abs(v2)
+5.0
+>>> print(v1)
+Vector(5, 6)
+```
