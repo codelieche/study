@@ -90,3 +90,64 @@ list comprehension简称listcomps, generator expression简称genexps。
 ('white', 'M')
 ('white', 'L')
 ```
+
+### 2.2.4 生成器表达式
+> 生成器表达式背后遵循了迭代器协议，可以逐个地产出元素。
+而不是先建立一个完整的列表，然后再把这个列表传递到某个构造函数里。
+
+
+## 2.3：元组
+> 元组不仅仅是不可变的列表。
+
+### 2.3.2 元组拆包
+
+```
+>>> lax_coordinates = (33.9425, -118.408056)
+>>> latitude, longitude = lax_coordinates
+>>> latitude
+33.9425
+>>> longitude
+-118.408056
+>>> _, x = ('xyz', 123)
+>>> x
+123
+```
+
+**用*来处理剩下的元素**  
+在Python中，函数用`*args`来获取不确定数量的参数，`**kwargs`获取不确定的键值对参数。
+
+```
+>>> x, y, *z = range(5)
+>>> z
+[2, 3, 4]
+>>> a, *b, c,d = range(5)
+>>> b
+[1, 2]
+```
+**注意**：在python2中会报错.
+
+### 2.3.3 嵌套元组拆包
+
+### 2.3.4 具名元组
+> 命名元组：`collections.namedtuple`,2个参数，一个是类名，另一个是类的各个字段的名字。
+后者可以是由数个字符串组成的可迭代对象，或者是由空格分割的字段名组成的字符串。
+
+```python
+
+from collections import namedtuple
+User = namedtuple("User", ('name', 'age'))
+
+City = namedtuple("City", 'name country population coordinates')
+print(City._fields)  # ('name', 'country', 'population', 'coordinates')
+u = User._make(('Jim', 20))  # User(name='Jim', age=20)
+u._asdict()  # OrderedDict([('name', 'Jim'), ('age', 20)])
+```
+
+- `_fields`：类属性，一个包含这个类所有字段名称的元组
+- `_make(iterable)`：类方法，通过接受一个可迭代对象来生成这个类的一个实例，它的作用跟`ClassName(*iter)`是一样的
+- `_asdict()`: 实例方法，把具名元组以`collections.OrderedDict`的形式返回
+
+### 作为不可变列表的元组
+
+
+

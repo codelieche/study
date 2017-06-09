@@ -232,6 +232,6 @@ Python会调用`bool(x)`，这个函数只能返回`True`或者`False`。
 算术运算符   |   `__add__ + 、__sub__ - 、__mul__ * 、__truediv__ / 、__floordiv__ // 、__mod__ % 、__divmod__ divmod() 、__pow__ **或pow() 、__round__ round()`
 反向算术运算符 |   `__radd__、__rsub__、__rmul__、__rtrudiv__、__rfloordiv__、__rmod__、__rdivmod__`
 增量赋值算术运算符   |   `__iadd__、__isub__、__imul__、__itruediv__、__ifloordiv__、__imod__、__ipow__`
-位运算符    |   `__invert__ ~ 、__lshift__ << 、__rshift__ >> 、__and__ & 、__or__ | 、 __xor__ ^`
+位运算符    |   `__invert__ ~ 、__lshift__ << 、__rshift__ >> 、__and__ & 、__or__  、 __xor__ ^`
 反向位运算符   |   `__rlshift__、__rrshift__、__rand__、__rxor__、__row__`
 增量赋值位运算符    |   `__ilshift__、__irshift__、__iand__、__ixor__、__ior__`
