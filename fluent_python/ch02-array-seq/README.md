@@ -209,3 +209,49 @@ TypeError: 'tuple' object does not support item assignment
 **说明：** t是不可变的当对其元素重新赋值，它会抛出`TypeError`异常，同时`t[2]`是列表，它可变，赋值成功。  
 **注意：**不要把可变的对象放入元组中。
 
+## 2.7 list.sort方法和内置函数sorted
+> list.sort方法会就地排序列表，不会把原列表复制一份。其返回值是None哦！  
+`sorted`函数，它会新建一个列表作为返回值。
+
+```
+>>> import random
+>>> l = [random.randint(10, 100) for _ in range(10)]
+>>> l
+[61, 91, 19, 29, 78, 40, 66, 33, 59, 20]
+>>> print(l.sort())
+None
+>>> l
+[19, 20, 29, 33, 40, 59, 61, 66, 78, 91]
+>>> random.shuffle(l)  # 对l重新搅乱
+>>> l
+[61, 19, 59, 66, 40, 29, 91, 78, 20, 33]
+>>> print(sorted(l))  # 用sorted排序
+[19, 20, 29, 33, 40, 59, 61, 66, 78, 91]
+>>> l   # sorted排序后，l没变化
+[61, 19, 59, 66, 40, 29, 91, 78, 20, 33]
+```
+
+> 一个函数或者方法，对对象进行的是就地改动，那它就应该返回`None`。  
+eg:`random.shuffle`。shuffle：洗牌、搅乱。
+
+### list.sort和sorted的参数
+- `reverse`: 默认是`False`，从低到高排序，设置为`True`将从高到低排序
+- `key`: 一个只有一个参数的函数，这个函数会被用在序列的每个元素上，所产生的结果将是排序算法依赖的对比关键字。
+
+```
+>>> import string    
+>>> string.ascii_letters
+'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+>>> l2 = [''.join(random.sample(string.ascii_letters, random.randint(1, 5))) for _ in range(0, 5)]
+>>> l2
+['AdS', 'B', 'bwd', 'HadBM', 'Xa']
+>>> sorted(l2)
+['AdS', 'B', 'HadBM', 'Xa', 'bwd']
+>>> sorted(l2, key=lambda x: len(x))
+['B', 'Xa', 'AdS', 'bwd', 'HadBM']
+>>> sorted(l2, key=lambda x: len(x), reverse=True)
+['HadBM', 'AdS', 'bwd', 'Xa', 'B']
+```
+
+
+
