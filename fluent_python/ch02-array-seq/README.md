@@ -253,5 +253,58 @@ eg:`random.shuffle`。shuffle：洗牌、搅乱。
 ['HadBM', 'AdS', 'bwd', 'Xa', 'B']
 ```
 
+## 2.8 用bisect来管理已排序的序列
+> bisect(平分、二等分)模块包含两个主要函数，bisect和insort，两个函数都利用二分查找算法来在有序序列中查找或插入元素。
+
+```
+>>> import bisect
+>>> dir(bisect)
+['bisect', 'bisect_left', 'bisect_right', 'insort', 'insort_left', 'insort_right']
+```
+
+### bisect.bisect
+
+> bisect(a, x[, lo[, hi]]) -> index  
+Return the index where to insert item x in list a, assuming a is sorted.
+
+> `bisect(haystack, needle)`在haystack(干草垛)里搜索needle(针)的位置，  
+该位置满足的条件是，把needle插入这个位置后，haystack还能保持升序。返回的是出入的位置索引(index)。  
+也就是index左边的值都小于或者等于needle。  
+注意：haystack必须是一个有序的序列。  
+
+得到索引怎么用呢？  
+用bisect.bisect得到了所以，再用haystack.insert(index, needle)来插入新值。
+
+```
+>>> l = [1, 2, 4, 6, 8]
+>>> bisect.bisect(3)
+>>> bisect.bisect(l, 3)
+2
+>>> l
+[1, 2, 4, 6, 8]
+>>> l.insert(bisect.bisect(l,3), 3)
+>>> l
+[1, 2, 3, 4, 6, 8]
+```
+
+### 示例：python3 bisect_demo.py
+
+```
+Demo: bisect_right
+HAYSTACK: [3, 4, 6, 12, 14, 18, 19, 22, 24, 28, 33, 34, 36, 41]
+NEEDLES: [0, 6, 7, 9, 12, 18, 20, 22, 24, 29, 33]
+haystack ->  3  4  6 12 14 18 19 22 24 28 33 34 36 41
+33 @ 11      |  |  |  |  |  |  |  |  |  |  |33
+29 @ 10      |  |  |  |  |  |  |  |  |  |29
+24 @  9      |  |  |  |  |  |  |  |  |24
+22 @  8      |  |  |  |  |  |  |  |22
+20 @  7      |  |  |  |  |  |  |20
+18 @  6      |  |  |  |  |  |18
+12 @  4      |  |  |  |12
+ 9 @  3      |  |  |9 
+ 7 @  3      |  |  |7 
+ 6 @  3      |  |  |6 
+ 0 @  0    0 
+```
 
 
