@@ -359,6 +359,23 @@ insort可以保持有序序列的顺序：另外也有`(insort_left, insort_righ
 array.array支持所有跟可变序列有关的操作，比如：`pop`、`insert`和`extend`。  
 另外，array还提供从文件读取和存入文件的更快的方法，`.frombytes`和`.tofile`。
 
+#### array Type Code
+
+Type code |  C Type | Minimum size in bytes
+-------- | --------- | ------- | -------
+ 'c' |    character  　　| 1
+ 'b' |    signed integer 　　| 1
+ 'B' |    unsigned integer   　　| 1
+ 'u' |    Unicode character  　　| 2
+ 'h' |    signed integer 　　| 2
+ 'H' |    unsigned integer  | 2
+ 'i' |    signed integer  | 2
+ 'I' |    unsigned integer  | 2
+ 'l' |    signed integer  | 4
+ 'L' |    unsigned integer  | 4
+ 'f' |    floating point | 4
+ 'd' |    floating point  | 8
+
 **示例：创建1000万个随机浮点数的数组：**
 
 ```python
@@ -411,3 +428,27 @@ True
 >>> d is d2
 False
 ```
+
+### 2.9.2 内存视图（Memory views）
+> memoryview是一个内置类，它能让用户在不复制内容的情况下操作同一个数组的不同切片。  
+memoryview.cast的概念跟数组模块类似，能用不同的方式读写同一块内存数据，而且内容字节不会随意改动。  
+memoryview.cast会把同一块内存里的数据内容打包成一个全新的memoryview对象给你。
+
+```
+>>> import array
+>>> numbers = array.array('h', [-4, -2, 0, 2, 4])
+>>> memv = memoryview(numbers)
+>>> len(memv)
+5
+>>> memv_oct = memv.cast('B')
+>>> mvmv_oct.tolist()
+[252, 255, 254, 255, 0, 0, 2, 0, 4, 0]
+>>> memv_oct[5] = 4
+>>> numbers
+array('h', [-4, -2, 1024, 2, 4])
+```
+把memv里面的内容转换成`B`类型，赋值给`memv_oct`(无符号字符)。  
+当把memv_oct位置为5的字节赋值成4。  
+注意：是在python3中测试的。
+
+
