@@ -451,4 +451,92 @@ array('h', [-4, -2, 1024, 2, 4])
 当把memv_oct位置为5的字节赋值成4。  
 注意：是在python3中测试的。
 
+### 2.9.3 NumPy and SciPy
 
+```
+>>> import numpy as np
+>>> a = np.arange(12)
+>>> a
+array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+>>> type(a)
+<type 'numpy.ndarray'>
+>>> a.shape
+(12,)
+>>> a.shape = (3, 4)
+>>> a
+array([[ 0,  1,  2,  3],
+       [ 4,  5,  6,  7],
+       [ 8,  9, 10, 11]])
+>>> a[2]
+array([ 8,  9, 10, 11])
+>>> a[2, 2]
+10
+>>> a[:, 1]
+array([1, 5, 9])
+>>> a.transpose()
+array([[ 0,  4,  8],
+       [ 1,  5,  9],
+       [ 2,  6, 10],
+       [ 3,  7, 11]])
+```
+
+### 2.9.4 双向队列和其它形式的队列
+> 利用`.append`和`.pop`方法，我们可以把列表当做栈或者队列来用。  
+比如：`.appen`和`.pop(0)`合起来，就能模拟栈的**先进先出**的特点。
+
+`collections.deque`类(双向队列)是一个线程安全、可以快速从两端添加或者删除元素的数据类型。
+而且还可以指定长度,指定maxlen参数即可，一旦指定，不可修改。  
+另外还有`from multiprocessing import Queue`，多进程通信就要用这个。
+
+```
+>>> from collections import deque
+>>> dq = deque(range(5), maxlen=5)
+>>> dq
+deque([0, 1, 2, 3, 4], maxlen=5)
+>>> dq.rotate(-4)
+>>> dq
+deque([4, 0, 1, 2, 3], maxlen=5)
+>>> dq.append(9)
+>>> dq
+deque([0, 1, 2, 3, 9], maxlen=5)
+>>> dq.pop()
+9
+>>> dq.pop()
+3
+>>> dq
+deque([0, 1, 2], maxlen=5)
+>>> dq.extend(['a','b',66])
+>>> dq
+deque([1, 2, 'a', 'b', 66], maxlen=5)
+>>> dq.appendleft('xxx')
+>>> dq
+deque(['xxx', 1, 2, 'a', 'b'], maxlen=5)
+>>> dq.extendleft([1, '2', 'dd'])
+>>> dq
+deque(['dd', '2', 1, 'xxx', 1], maxlen=5)
+>>> dq.rotate(-4)
+>>> dq
+deque([1, 'dd', '2', 1, 'xxx'], maxlen=5)
+```
+
+#### deque.rotate
+> 队列的旋转操作接受一个参数n，当`n > 0`时，队列的最右边的n个元素会被移动到队列的左边。  
+当`n < 0`时，最左边的n个元素会被移动到最右边。注意n不是索引，而且元素的个数。
+
+```
+>>> dq.extend('12345')
+>>> dq
+deque(['1', '2', '3', '4', '5'], maxlen=5)
+>>> dq.rotate(-4)
+>>> dq
+deque(['5', '1', '2', '3', '4'], maxlen=5)
+>>> dq.extend('12345')
+>>> dq
+deque(['1', '2', '3', '4', '5'], maxlen=5)
+>>> dq.rotate(4)
+>>> dq
+deque(['2', '3', '4', '5', '1'], maxlen=5)
+```
+
+`-4`的时候，把左边的`1,2,3,4`移动到最右边，那么`5`就到最左边了。  
+`4`的时候，把右边的`2,3,4,5`4个元素移动到最左边，那么`1`就到最右边了。
