@@ -131,4 +131,43 @@ defaultdict(<function fun at 0x106d33f28>, {'a': 2, 'b': 1})
 False
 ```
 
+#### StrKeyDict0
 
+```python
+
+class StrKeyDict0(dict):
+    def __missing__(self, key):
+        # 当有非字符串的键被查找的时候，StrKeyDict0把键转换为字符串
+        if isinstance(key, str):
+            raise KeyError(key)
+        return self[str(key)]
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def __contains__(self, key):
+        return key in self.keys() or str(key) in self.keys()
+```
+
+使用示例：
+
+```
+>>> from strkeydict0 import StrKeyDict0
+>>> d = StrKeyDict0([('2', 'two'), ('3', 'three')])
+>>> d['2']
+'two'
+>>> d[2]
+'two'
+>>> d[4]
+Traceback (most recent call last):
+    ....
+    raise KeyError(key)
+KeyError: '4'
+>>> d.get(4, 'F')
+'F'
+>>> d.get(2)
+'two'
+```
