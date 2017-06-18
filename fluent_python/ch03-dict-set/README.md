@@ -66,3 +66,69 @@ False
 ## 3.3 常见的映射方法
 在`collections`中还有`defaultdict`和`OrderedDict`。
 
+
+## 3.4 映射的弹性键查询
+> 有时候为了方便起见，就算某个键在映射里不存在，我们也希望在通过这个键读取值的时候能得到一个默认值。
+
+有两种方式：  
+1. 通过`collections.defaultdict`这个类,而不是`dict`
+2. 自己定义一个`dict`的子类，然后在子类中实现`__missing__`方法
+
+### 3.4.1：defaultdict 处理找不到的键的一个选择
+> 把内置函数`list`传给defaultdict.
+
+```
+>>> from collections import defaultdict
+>>> dd = defaultdict(list)
+>>> dd['gg']
+[]
+>>> dd
+defaultdict(<class 'list'>, {'gg': []})
+>>> dd['ff']
+[]
+>>> dd
+defaultdict(<class 'list'>, {'gg': [], 'ff': []})
+>>> dd.items()
+dict_items([('gg', []), ('ff', [])])
+```
+
+> 自定义个函数传给`defaultdict`
+ 
+```
+ >>> def fun():
+...     return 1
+... 
+>>> dd2 = defaultdict(fun)
+>>> dd2['a']
+1
+>>> dd2['a'] += 1
+>>> dd2['b']
+1
+>>> dd2
+defaultdict(<function fun at 0x106d33f28>, {'a': 2, 'b': 1})
+>>> dd2.items()
+dict_items([('a', 2), ('b', 1)])
+```
+
+### 3.4.2：特殊方法 __missing__
+> 所有的映射类型在处理找不到的键的时候，都会牵扯到`__missing__`方法。  
+自定义dict子类，实现`__missing__`方法，那么在`__getitem__`碰到找不到键的时候，
+python就会自动调用它，而不是抛出一个`KeyError`异常。
+
+**注意：**  
+`__missing__`方法只会被`__getitem__`触发(比如：在表达式d[k]）  
+ 而`__missing__`方法对`get`或者`__contains__`(in运算符会用到这个特殊方法)无影响。
+ 
+ ```
+ >>> dd2
+defaultdict(<function fun at 0x106d33f28>, {'a': 2, 'b': 1})
+>>> dd2['c']
+1
+>>> dd2.get('d')
+>>> dd2.get('c')
+1
+>>> 'd' in dd2
+False
+```
+
+
