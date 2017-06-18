@@ -52,3 +52,17 @@ False
 ```
 > Dict有多张构造方法，上面的示例，虽然的`d1 == d2 == d3 == d4 == d5`，但是它们的id是不同的哦。
 
+## 3.2 字典推导
+
+```
+>>> l = [('two', 2), ('three', 3), ('one', 1)]
+>>> d = {v: k for k,v in l} 
+>>> d
+{2: 'two', 3: 'three', 1: 'one'}
+>>> {k: v.upper() for k,v in d.items() if k >= 2}
+{2: 'TWO', 3: 'THREE'}
+```
+
+## 3.3 常见的映射方法
+在`collections`中还有`defaultdict`和`OrderedDict`。
+
