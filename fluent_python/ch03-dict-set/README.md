@@ -171,3 +171,20 @@ KeyError: '4'
 >>> d.get(2)
 'two'
 ```
+
+## 3.5: 字典的变种
+> dict创建的字典，键是无需的，而如果想要键保持有序，就可以用`collections.OrderedDict`。  
+这个类型在添加键的时候会保持顺序，因此键的迭代次序总是一致的。  
+`OrderDict`的`popitem`方法默认删除并返回最后有一个元素，如果加个参数`d.popitem(last=False)`这样调用，  
+那么它删除并返回最前面添加进去的元素。
+
+## 3.6：子类化UserDict
+> 就创造自定义映射类型来说，以UserDict为基类，比普通的dict为基类要来得方便。  
+一个值得注意的地方是：UserDict并不是dict的子类。  
+但是UserDict有一个叫做data的属性，是dict的实例，这个属性实际上是UserDict最终存储数据的地方。
+
+**注意：**  
+在py2中是直接引用`from UserDict import UserDict`，py3中是`from collections import UserDict`.  
+`strkeydict.py`中的StrKeyDict`就是继承了`collections.UserDict`。  
+ 
+ 
