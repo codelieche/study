@@ -210,4 +210,70 @@ mappingproxy({1: 'aaa', 2: 'bbb'})
 'bbb'
 ```
 
+## 3.8: 集合论
+> `set`和`frozenset`: 集合的本质是许多唯一对象的聚集，集合可以用于去重。  
+集合中的元素必须是可散列的，set类型本身是不可散列的，但是frozenset可以。
+
+
+### set
+
+```
+>>> l = [1, 2, 33, 5, 3, 3, 2, 1, 43, 88, 98]
+>>> set(l)
+{1, 2, 3, 33, 5, 98, 43, 88}
+>>> list(set(l))
+[1, 2, 3, 33, 5, 98, 43, 88]
+```
+
+- 集合a和b
+- `a | b`：返回a和b的合集
+- `a & b`: 返回a和b的交集
+- `a - b`: 返回a与b的差集(在a中，但是不在b中的元素)
+
+```
+>>> a = set((1, 3, 5))
+>>> b = set([2, 4, 5, 6])
+>>> a
+{1, 3, 5}
+>>> b
+{2, 4, 5, 6}
+>>> a | b
+{1, 2, 3, 4, 5, 6}
+>>> a & b
+{5}
+>>> a - b
+{1, 3}
+```
+
+set的add、remove和pop等方法：
+
+```
+>>> s = set([1,2,3,4])
+>>> s.add(5)
+>>> s
+{1, 2, 3, 4, 5}
+>>> s.pop()
+1
+>>> s
+{2, 3, 4, 5}
+>>> s.remove(3)
+>>> s
+{2, 4, 5}
+```
+
+### fronzenset
+
+> `frozenset`是冻结的集合，它是不可变的，存在哈希值，  
+**优点：**它可以作为字典的key，也可以作为其它集合的元素。  
+**缺点：**是一旦创建便不能更改，没有add，remove等方法。而set是有`add`,`pop`和`remove`方法的。
+
+```
+>>> fs = frozenset([1,2,3,5])
+>>> fs
+frozenset({1, 2, 3, 5})
+>>> fs.add
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'frozenset' object has no attribute 'add'
+```
 
