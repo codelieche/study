@@ -277,3 +277,33 @@ Traceback (most recent call last):
 AttributeError: 'frozenset' object has no attribute 'add'
 ```
 
+## 3.9: dict和set的背后
+
+**散列值和相等值:**
+
+> 内置的hash()方法可以用于所有的内置类型对象。如果是自定义对象调用hash的话，实际上运行的是自定义的`__hash__`。
+
+**散列表算法**
+
+> 为了获取`my_dict[search_key]`背后的值，Python首先会调用`hash(search_key)`来计算`search_key`的散列值，
+把这个值最低的几位数字当做偏移量，在散列表里查找表元(具体取几位，得看当前散列表的大小)。  
+若找到的表元是空的，则抛出`KeyError`异常。若不为空的，则杓袁里会有一对`found_key: found_value`。
+这个时候Python会检验`search_key == found_key`算法为真，如果他们相等的话，就会返回`found_value`。
+
+如果`search_key`和`found_key`不匹配的话，这种情况成为**散列冲突**。  
+
+### dict的实现及其导致的结果
+- 1.键必须是可散列的
+
+散列对象必须满足的条件：
+- 支持`hash()`函数，比鞥企鹅通过`__hash__()`方法所得到的散列值是不变的
+- 支持`__eq__()`方法来检测相等性
+- 若`a == b`为真，则`hash(a) == hash(b)也为真
+
+- 2.字典在内存上的开销巨大
+> 如果需要存放数量巨大的记录，那么放在由元组或是具名元组(namedtuple)构成的列表中会比较好。  
+在用户自定义的类型中，`__slots__`属性可以改变实例属性的存储方式，由`dict`变成`tuple`。
+
+- 3.键查询很快
+- 4.键的次序取决于添加顺序
+- 5.往字典里添加新键可能会改变已有键的顺序
