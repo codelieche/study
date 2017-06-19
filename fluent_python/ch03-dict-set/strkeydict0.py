@@ -27,6 +27,3 @@ if __name__ == "__main__":
     # print(d[4])   # KeyError: '4'
     print(d.get(4, 'no'))  # no
     print(d.get(2))  # two
-
-
-

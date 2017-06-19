@@ -187,4 +187,27 @@ KeyError: '4'
 在py2中是直接引用`from UserDict import UserDict`，py3中是`from collections import UserDict`.  
 `strkeydict.py`中的StrKeyDict`就是继承了`collections.UserDict`。  
  
+ ## 3.7: 不可变映射类型
+ > 标准库里所有的映射类型都是可变的，有时候需要不变的。  
+ 从python3.3开始，types模块中引入了一个封装类名叫`MappingProxyType`。
  
+ ```
+ >>> from types import MappingProxyType
+>>> d = {1: 'aaa'}
+>>> d_proxy = MappingProxyType(d)
+>>> d_proxy
+mappingproxy({1: 'aaa'})
+>>> d_proxy[1]
+'aaa'
+>>> d_proxy[2] = 'bbb'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'mappingproxy' object does not support item assignment
+>>> d[2] = 'bbb'
+>>> d_proxy
+mappingproxy({1: 'aaa', 2: 'bbb'})
+>>> d_proxy[2]
+'bbb'
+```
+
+
