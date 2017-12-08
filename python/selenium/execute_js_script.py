@@ -34,4 +34,11 @@ browser.execute_script('''
     ele.scrollIntoView();
     ''')
 
-
+# 5. 执行alert，然后选中点击确认
+# 5-1: 弹出alert
+browser.execute_script("alert('Hello Alert!')")
+# 5-2：点击确认
+# 老的方法：switch_to_alert已经被丢弃
+# 注意：switch_to.alert不是个方法哦，不要加括号
+alert = browser.switch_to.alert
+alert.accept()
