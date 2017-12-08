@@ -6,5 +6,5 @@
 - [upload_image.py](./selenium/upload_image.py): 通过requests上传图片到服务器，selenium截图后调用
 - [execute_js_script.py](./selenium/execute_js_script.py): selenium执行javascript代码
 - [choice_select_option.py](./selenium/choice_select_option.py): 选择框Select的使用
-
+- [drag_and_drop.py](./selenium/drag_and_drop.py): 鼠标事件拖拽
 
