@@ -1,4 +1,6 @@
-.idea
+.idea/
+.vscode/
+
 tmp/*
 *.pyc
 __pycache__

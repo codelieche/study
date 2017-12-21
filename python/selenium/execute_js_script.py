@@ -33,6 +33,8 @@ browser.execute_script('''
     var ele=document.getElementsByClassName('item-info')[3];
     ele.scrollIntoView();
     ''')
+# 滑动到底部
+browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
 # 5. 执行alert，然后选中点击确认
 # 5-1: 弹出alert
