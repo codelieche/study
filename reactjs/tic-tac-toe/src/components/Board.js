@@ -6,9 +6,28 @@ import Square from './Square';
 
 class Board extends React.Component {
     // 棋盘面板，3行3列，共9个正方形
+    constructor(props) {
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null),
+        };
+    }
+
+    handleClick(i) {
+        console.log(i);
+        // 用slice去实现squares数组的copy
+        const squares = this.state.squares.slice();
+        squares[i] = 'X';
+        this.setState({squares: squares});
+    }
 
     renderSquare(i) {
-        return <Square value={i} />;
+        return (
+            <Square
+              value={this.state.squares[i]}
+              onClick={() => this.handleClick(i)}
+            />
+        );
     }
 
     render() {
