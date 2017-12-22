@@ -5,10 +5,17 @@ import React from 'react';
 
 class Square extends React.Component {
     // 棋盘中的正方形
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: null,
+        };
+    }
+    
     render() {
         return (
-        <button className="square">
-            {/* TODO */}
+        <button className="square" onClick={() => alert('click:' + this.props.value)}>
+            {this.props.value}
         </button>
         );
     }

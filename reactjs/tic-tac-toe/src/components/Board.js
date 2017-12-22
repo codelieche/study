@@ -8,7 +8,7 @@ class Board extends React.Component {
     // 棋盘面板，3行3列，共9个正方形
 
     renderSquare(i) {
-        return <Square />;
+        return <Square value={i} />;
     }
 
     render() {
