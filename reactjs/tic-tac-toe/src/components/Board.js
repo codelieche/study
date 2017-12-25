@@ -7,15 +7,18 @@ import calculateWinner from './calculate';
 
 class Board extends React.Component {
     // 棋盘面板，3行3列，共9个正方形
-    constructor(props) {
-        super(props);
-        this.state = {
-            squares: Array(9).fill(null),
-            // 下一步是X还是O
-            xIsNext: true,
-            winner: null
-        };
-    }
+
+    //  squares通过this.props.squares来获取了
+
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         squares: Array(9).fill(null),
+    //         // 下一步是X还是O
+    //         xIsNext: true,
+    //         winner: null
+    //     };
+    // }
 
     handleClick(i) {
         console.log(i);
@@ -39,25 +42,25 @@ class Board extends React.Component {
     renderSquare(i) {
         return (
             <Square
-              value={this.state.squares[i]}
-              onClick={() => this.handleClick(i)}
+              value={this.props.squares[i]}
+              onClick={() => this.props.onClick(i)}
             />
         );
     }
 
     render() {
         // 把squares传入计算赢家的算法中
-        const winner = calculateWinner(this.state.squares);
-        let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
-        }else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-        }
+        // const winner = calculateWinner(this.state.squares);
+        // let status;
+        // if (winner) {
+        //     status = 'Winner: ' + winner;
+        // }else {
+        //     status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        // }
 
         return (
             <div>
-                <div className="status">{status}</div>
+                {/* <div className="status">{status}</div> */}
                 <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
