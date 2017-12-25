@@ -21,6 +21,8 @@ class Board extends React.Component {
     // }
 
     handleClick(i) {
+        //  把onClick的处理事件放到Game组件中了
+        
         console.log(i);
         // 用slice去实现squares数组的copy
         const squares = this.state.squares.slice();
