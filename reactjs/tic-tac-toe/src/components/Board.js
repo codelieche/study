@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import Square from './Square';
+import calculateWinner from './calculate';
 
 class Board extends React.Component {
     // 棋盘面板，3行3列，共9个正方形
@@ -12,6 +13,7 @@ class Board extends React.Component {
             squares: Array(9).fill(null),
             // 下一步是X还是O
             xIsNext: true,
+            winner: null
         };
     }
 
@@ -19,10 +21,18 @@ class Board extends React.Component {
         console.log(i);
         // 用slice去实现squares数组的copy
         const squares = this.state.squares.slice();
+
+        // 如果已经有winner或者当前格子已经有值，就不做任何操作
+        if (this.state.winner || squares[i]) {
+            return;
+        }
+        
         squares[i] = this.state.xIsNext ? 'X' : 'O';
+        var winner = calculateWinner(squares);
         this.setState({
                 squares: squares,
-                xIsNext: !this.state.xIsNext
+                xIsNext: !this.state.xIsNext,
+                winner: winner,
             });
     }
 
@@ -36,7 +46,14 @@ class Board extends React.Component {
     }
 
     render() {
-        const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        // 把squares传入计算赢家的算法中
+        const winner = calculateWinner(this.state.squares);
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner;
+        }else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
 
         return (
             <div>
