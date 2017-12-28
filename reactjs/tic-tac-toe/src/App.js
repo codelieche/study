@@ -12,12 +12,17 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
             }],
+            stepNumber: 0,
             xIsNext: true,
         }
     }
 
     handeleClick(i) {
         console.log(i);
+        // 在jumperTo中就修改了history了，所以这里可以直接使用history
+        // 或者根据stepNumber来确定history
+        // const history = this.state.history.slice(0, this.state.stepNumber + 1);
+
         const history = this.state.history;
         const current = history[history.length - 1];
         const squares = current.squares.slice();
@@ -35,13 +40,18 @@ class Game extends React.Component {
         });
     }
 
-    jumpTo(move) {
+    jumpTo(step) {
         // 跳到第几步
         this.setState(prevState => {
             // 先取出老的history
             var history = prevState.history;
-            var newHistory = history.slice(0, move + 1);
-            return {history: newHistory};
+            var newHistory = history.slice(0, step + 1);
+            return {
+                history: newHistory,
+                // 修改step和xIsNext
+                stepNumber: step,
+                xIsNext: (step % 2) === 0,
+            };
         });
     }
 
