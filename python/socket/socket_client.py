@@ -10,3 +10,9 @@ client.connect(('127.0.0.1', 9000))
 
 # 发送数据
 client.send('Hello')
+
+msg = client.recv(1024)
+
+print("收到消息:", msg)
+
+client.close()
