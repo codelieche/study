@@ -74,3 +74,70 @@ s.fileno() | 返回套接字的文件描述
 s.setblocking(flag) | 如果flag为0，则将套接字设置为非阻塞模式，否则将套接字设置为阻塞模式（默认值）。非阻塞模式下，如果调用recv()没有发现任何数据，或send()调用无法立即发送数据，那么将引起socket.error异常。
 s.makefile() | 创建一个与该套接字相关的文件
 
+----
+
+### Socket编程思想
+
+#### TCP服务器
+
+**1. 创建套接字，丙丁套接字到本地IP与端口**
+
+```python
+import socket
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ('0.0.0.0', 9000)
+s.bind(server_address)
+```
+
+**2. 开始监听连接**
+
+```python
+server.listen(5)
+```
+
+**3. 进入循环，不断的将接受客户端的链接请求**
+
+```python
+while True:
+    conn, address = server.accept()
+```
+
+**4. 接收客户端传来的数据，并且发送数据给对方**
+
+```python
+conn.recv(1024)
+conn.sendall()
+```
+
+**5. 传输完毕后，关闭套接字**
+
+```python
+server.close()
+```
+
+#### TCP客户端
+
+**1. 创建套接字并连接至远端地址**
+
+```python
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ('127.0.0.1', 9000)
+client.connect(server_address)
+```
+
+**2. 连接后发送数据和接收数据**
+
+```python
+client.sendall(b'Hello World')
+
+client.recv(1024)
+```
+
+**3. 传输完毕，关闭套接字**
+
+```python
+client.close()
+```
+
+
