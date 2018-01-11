@@ -8,3 +8,4 @@
 ### 常用算法
 - [二分查找](./base/binary-search.md)
 - [大O表示法](./base/big-o.md)
+- [数组和链表](./base/array-link.md)
