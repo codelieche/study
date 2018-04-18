@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 第三方app
     'rest_framework',
     # 自己写的app
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -160,18 +161,18 @@ MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../media"))
 
 # 注册用户系统使用哪个用户模型
 # 不需要加入中间的models
-# AUTH_USER_MODEL = 'account.UserProfile'
+AUTH_USER_MODEL = 'account.UserProfile'
 
 # 登陆地址: 当使用了login_required装饰器未传入login_url参数，默认会在settings中找LOGIN_URL
 # LOGIN_URL = "/user/login"
 
 # 使用自定义的后台auth认证方法
-# AUTHENTICATION_BACKENDS = (
-#     # LDAP登陆配置
-#     # 'django_python3_ldap.auth.LDAPBackend',
-#     # 自定义的登陆Backend
-#     'account.auth.CustomBackend',
-# )
+AUTHENTICATION_BACKENDS = (
+    # LDAP登陆配置
+    # 'django_python3_ldap.auth.LDAPBackend',
+    # 自定义的登陆Backend
+    'account.auth.CustomBackend',
+)
 
 # LDAP配置，有需要可以查看django ldap相关文档
 
