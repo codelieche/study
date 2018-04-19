@@ -1,0 +1,182 @@
+@charset 'UTF8';
+/* sider 开关的样式*/
+.sider-toggle{
+    text-align: center;
+     background: #4A5064;
+     height: 35px;
+     width: 100%;
+     i {
+         color:#FFF;
+         font-size: 16px;
+         line-height: 35px;
+     }
+}
+
+/* 左边菜单的样式 */
+.menu-left {
+    color: #F8F8F8;
+    width: 100%;
+
+    // 设置内容益处，可以滚动，但是不要显示滚动条
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 100%;
+    -ms-overflow-style:none;
+    overflow:-moz-scrollbars-none;
+
+    &::-webkit-scrollbar {
+        display:none
+    }
+
+    i {
+        font-size: 15px;
+        color: #F8F8F8;
+        line-height: 40px;
+    }
+    .title {
+        padding-left: 7px;
+        font-size: 13px;
+    }
+    .top-menu {
+        /* 一级menu的样式 */
+        display: block;
+        width: 100%;
+        .top-menu-title {
+            // 一级菜单标题
+            height: 40px;
+            padding-left: 22px;
+            position: relative;
+            .title {
+                line-height: 40px;
+                // font-size: 14px;
+            }
+            &:hover {
+                background: #00c1de;
+            }
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        
+        .sub-menu-list{
+            /* 二级菜单列表 默认是不展开的 */
+            display: none;
+            width: 100%;
+
+            .sub-menu-item{
+                // 二级菜单
+                height: 40px;
+                a {
+                    padding-left: 36px;
+                    display: block;
+                    color: #F8F8F8;
+                    line-height: 40px;
+                    width: 100%;
+                    background: #42485B;
+                    text-decoration: none;
+                    &:hover{
+                        /* 鼠标移动到二级menu上的背景色*/
+                        background: #4A5064;
+                    }
+                    &.active{
+                        /* active的二级menu背景色 */
+                        background: #00c1de;
+                    }
+                }
+                // 设置菜单右侧的icon大小
+                .sub-menu-list-title i{
+                    font-size: 13px;
+                }
+                
+            }
+        }
+        /* 设置top-menu active时候 子菜单显示 */
+        &.active {
+            // .top-menu-title{
+            //     // background: #00c1de;
+            //     // border-bottom: 1px dashed #757a7c;
+            // }
+            .sub-menu-list{
+                display: block;
+            }
+        }
+    }
+}
+/* 设置sider缩小的时候最小宽度 */
+.ant-layout-sider-children{
+    min-width: 64px;
+    /* 导航side缩放后放大，宽度变成185px了，或者取消设置.side的overflow:auto */
+    overflow: hidden;
+}
+
+/* 设置menu缩小时候的样式 */
+.menu-left.menu-small{
+    // 侧边栏收起的时候样式
+    .top-menu {
+        display: block;
+    }
+    .top-menu-title {
+        padding-left: 22px;
+    }
+    .sub-menu-list .sub-menu-item {
+        a {
+            padding-left: 22px;
+        }
+    }
+}
+
+/* 设置top-menu 右边的title */
+.menu-left {
+    /* 设置top-menu active 右侧的尖叫符号，选择180°*/
+    .top-menu.active .top-menu-title .title{
+        &:after{
+            transform: rotate(180deg) scale(0.75);
+        }
+    }
+    .top-menu .top-menu-title {
+        .title {
+            &:after {
+                /* title 后面的尖角符号 */
+                font-family: "anticon" !important;
+                font-style: normal;
+                vertical-align: baseline;
+                text-align: center;
+                text-transform: none;
+                text-rendering: auto;
+                position: absolute;
+                -webkit-transition: -webkit-transform .3s;
+                transition: -webkit-transform .3s;
+                -o-transition: transform .3s;
+                transition: transform .3s;
+                transition: transform .3s, -webkit-transform .3s;
+                content: "\E61D";
+                right: 16px;
+                top: 0;
+                display: inline-block;
+                font-size: 12px;
+                font-size: 8px \9;
+                -webkit-transform: scale(0.66666667) rotate(0deg);
+                -ms-transform: scale(0.66666667) rotate(0deg);
+                transform: scale(0.66666667) rotate(0deg);
+                -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+                zoom: 1;
+            }
+        }
+    }
+}
+
+.right-nav-ul {
+    list-style: none;
+    padding: 0;
+}
+
+// antd3.0导航栏折叠的时候宽度是80px，但是还是觉得65px比较好看
+// 可以直接设置Layout.Sider的 collapsedWidth={65}
+// .sider.ant-layout-sider.ant-layout-sider-collapsed{
+//     min-width: 65px !important;
+//     max-width: 65px !important;
+//     width: 65px !important;
+// }
