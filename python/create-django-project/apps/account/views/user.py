@@ -4,11 +4,21 @@
 """
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from rest_framework import generics
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
-from account.serializers.user import UserLoginSerializer
+from utils.permissions import IsSuperUserOrReadOnly
+from modellog.mixins import LoggingViewSetMixin
+from account.serializers.user import (
+    UserLoginSerializer,
+    UserAllListSerializer,
+    UserSimpleInfoSerializer,
+    UserDetailSerializer
+)
+from account.models import User
 
 
 class LoginView(APIView):
@@ -47,12 +57,18 @@ class LoginView(APIView):
 
             if user is not None:
                 # 登陆
-                login(request, user)
-                content = {
-                    "status": True,
-                    "username": user.username,
-                    "message": "登陆成功",
-                }
+                if user.is_active:
+                    login(request, user)
+                    content = {
+                        "status": True,
+                        "username": user.username,
+                        "message": "登陆成功",
+                    }
+                else:
+                    content = {
+                        "status": False,
+                        "message": "用户({})已被禁用".format(user.username)
+                    }
                 return JsonResponse(data=content, status=status.HTTP_200_OK)
             else:
                 content = {
@@ -74,3 +90,57 @@ def account_logout(request):
     # 有时候会传next
     next_url = request.GET.get("next", "/")
     return JsonResponse({"status": True, "next": next_url})
+
+
+class UserListView(generics.ListAPIView):
+    """
+    用户列表
+    """
+    queryset = User.objects.filter(is_deleted=False)
+    serializer_class = UserSimpleInfoSerializer
+    pagination_class = None
+    permission_classes = (IsAuthenticated,)
+
+
+class UserAllListView(generics.ListAPIView):
+    """
+    所有用户列表
+    """
+    queryset = User.objects.all()
+    serializer_class = UserAllListSerializer
+    # 分页和权限
+    pagination_class = None
+    # 权限
+    permission_classes = (IsAuthenticated, )
+
+
+class UserDetailView(LoggingViewSetMixin, generics.RetrieveUpdateDestroyAPIView):
+    """
+    用户详情api
+    1. GET：获取用户详情
+    2. PUT：修改用户信息
+    3. DELETE：删除用户信息【需要自定义】
+    """
+    queryset = User.objects.all()
+    serializer_class = UserDetailSerializer
+    # 权限控制
+    permission_classes = (IsSuperUserOrReadOnly,)
+
+    def delete(self, request, *args, **kwargs):
+        # 第1步：获取到用户
+        user = self.get_object()
+        if user == request.user:
+            content = {
+                "message": "不可以删除自己"
+            }
+            return Response(content, status=400)
+
+        # 第2步：对用户进行删除
+        # 2-1：设置deleted和is_active
+        user.is_deleted = True
+        user.is_active = False
+        user.save()
+
+        # 第3步：返回响应
+        response = Response(status=204)
+        return response
