@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 第三方app
     'rest_framework',
+    'corsheaders',  # 跨域访问
     # 自己写的app
     'account',
+    'modellog'
 ]
 
 MIDDLEWARE = [
@@ -57,9 +59,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 第三方中间件
+    # 跨域访问 cors
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 
     # 自定义中间件
-
+    # 如果是api访问用户的，就不对csrf校验
+    'utils.middlewares.csrf.ApiDisableCsrfMiddleware',
 ]
 
 ROOT_URLCONF = 'codelieche.urls.main'
@@ -201,3 +207,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     )
 }
+
+# 跨域访问
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ALLOW_CREDENTIALS = True
