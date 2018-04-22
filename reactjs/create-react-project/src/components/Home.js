@@ -14,6 +14,9 @@ import Header from './Base/Header';
 import Nav from './Base/Nav';
 import Footer from './Base/Footer';
 
+// 检查登陆的方法
+import CheckLogined from "./Utils/auth";
+
 
 const { Sider, Content } = Layout;
 
@@ -28,8 +31,35 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        // 组件将要mount后先检查下用户是否登陆了
+        // 组件将要mount前先检查下用户是否登陆了
+        if (this.props.history.action === "PUSH") {
+            // 不需要检查是否登陆
+        } else {
+            // 为了测试，只要不是/的就都检查
+            if (this.props.location.pathname !== "/") {
+                CheckLogined(this.props);
+            }
+        }
+    }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.history.action === "PUSH") {
+            // 每次点击了新的页面检查登陆
+            var now = new Date();
+            var sub = 0;
+            sub = now.getTime() - prevState.laskCheckTime.getTime();
+            // 六分钟之内不检查是否登陆
+            if (sub > 1000 * 60 * 6) {
+                // CheckLogined需要三个参数：{ history, match, location }
+                CheckLogined(nextProps);
+                return {
+                    laskCheckTime: now,
+                }
+            } else {
+                // console.log("不需要检查登陆", sub);
+            }
+        }
+        return null;
     }
 
     toggle = () => {
@@ -44,6 +74,19 @@ export default class Home extends Component {
         // Sider的onCollapse事件
         this.setState({ collapsed });
     }
+
+    checkLoginOperation = () => {
+        var now = new Date();
+        var sub = 0;
+        sub = now.getTime - this.state.laskCheckTime.getTime();
+        // 六分钟之内不检查是否登陆
+        if (sub > 1000 * 600) {
+            this.setState({ laskCheckTime: now });
+            CheckLogined(this.props);
+        } else {
+            // console.log("不需要检查登陆", sub);
+        }
+    };
 
     render() {
         return (
