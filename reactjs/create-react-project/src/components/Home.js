@@ -4,15 +4,18 @@ import {
     Layout,
     Icon,
 } from 'antd';
-// import {
-//     // BrowserRouter as Router,
-//     Switch,
-//     Route,
-// } from 'react-router-dom';
+import {
+    // BrowserRouter as Router,
+    Switch,
+    Route,
+} from 'react-router-dom';
 
 import Header from './Base/Header';
 import Nav from './Base/Nav';
 import Footer from './Base/Footer';
+
+// 主页面
+import UserIndex from './User/Index';
 
 // 检查登陆的方法
 import CheckLogined from "./Utils/auth";
@@ -123,7 +126,18 @@ export default class Home extends Component {
 
                         {/* 主体内容开始 */}
                         <Content className="container">
-                            {this.props.history.location.pathname}
+                            <Switch>
+                                <Route
+                                    path="/user"
+                                    component={UserIndex}
+                                    location={this.props.location}
+                                />
+                                <Route
+                                    path="/"
+                                    component={() => <div> {this.props.history.location.pathname}</div>}
+                                    location={this.props.location}
+                                />
+                            </Switch>
                         </Content>
                         {/* 主体内容end */}
 

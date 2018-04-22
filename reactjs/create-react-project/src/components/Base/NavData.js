@@ -109,6 +109,11 @@ var navData = [
                 title: '分组',
             },
             {
+                slug: '/user/list',
+                icon: 'usergroup-add',
+                title: '所有用户',
+            },
+            {
                 slug: '/user/message',
                 icon: 'message',
                 title: '消息中心',

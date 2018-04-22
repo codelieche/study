@@ -8,6 +8,7 @@ import {
 import Home from './components/Home';
 import Login from "./components/User/Login";
 import Logout from "./components/User/Logout";
+import NoMatch from "./components/Base/NoMatch";
 import Test from './components/Test';
 
 // 按需加载，不需要引入antd.css
@@ -28,6 +29,8 @@ class App extends Component {
           <Route path="/cloud" render={(props) => (<Home defaultOpenKey="cloud" {...props} />)} />
           <Route path="/user" render={(props) => (<Home defaultOpenKey="user" {...props} />)} />
           <Route path="/test" component={Test} />
+          {/* 这个一定要放最后面 */}
+          <Route component={NoMatch} />
         </Switch>
       </Router>
     );
