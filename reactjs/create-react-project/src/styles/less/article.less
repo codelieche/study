@@ -1,0 +1,59 @@
+@charset 'UTF8';
+
+// 首页弹出消息样式
+.message {
+    .meta {
+        font-size: 12px;
+        color: #999;
+        padding-bottom: 3px;
+        .meta-item{
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+    // 消息内容样式
+    .content {
+        padding-top: 10px;
+        font-size: 13px;
+        color: #9B9B9B;
+        border-top: 1px dashed #d4d6d8;
+    }
+}
+
+// 消息 文章样式
+.article {
+    margin: 10px 0;
+    padding: 10px 20px;
+    border: 1px solid #E1E6EB;
+
+    .header {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #E1E6EB;
+        h4 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: 400;
+            line-height: 1.1;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .meta {
+            font-size: 13px;
+            line-height: 22px;
+            color: #999;
+            span + span {
+                display: inline-block;
+                margin-left: 15px;
+            }
+        }
+    }
+
+    .body {
+        padding: 20px 10px;
+        min-height: 320px;
+        font-size: 14px;
+        line-height: 24px;
+    }
+}

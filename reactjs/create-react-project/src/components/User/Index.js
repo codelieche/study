@@ -20,6 +20,8 @@ import UserGroupAdd from "./Group/Add";
 import UserGroupEditor from "./Group/Editor";
 import UserGroupDetail from "./Group/Detail";
 
+// User Message相关的组件
+import UserMessage from './Message/Index';
 
 
 class UserIndex extends React.Component {
@@ -41,6 +43,9 @@ class UserIndex extends React.Component {
                     path="/user/group"
                     render={() => <Redirect to="/user/group/list" push={false} />}
                 />
+
+                {/*用户消息  */}
+                <Route exat path="/user/message" component={UserMessage} />
 
                 <Route
                     exat

@@ -110,7 +110,7 @@ var navData = [
             },
             {
                 slug: '/user/list',
-                icon: 'usergroup-add',
+                icon: 'user',
                 title: '所有用户',
             },
             {

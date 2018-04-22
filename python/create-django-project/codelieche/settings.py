@@ -200,7 +200,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     # 设置DatetimeField字段的格式
-    'DATETIME_FORMART': '%Y-%m-%d %H:%M:%S',
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
     # 用户认证
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
