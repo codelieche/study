@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from account.models import UserProfile
+from account.models import UserProfile, MessageScope
 
 # Register your models here.
 
@@ -16,5 +16,14 @@ class UserModelAdmin(admin.ModelAdmin):
     search_fields = ("username", "mobile")
 
 
+class MessageScopeAdmin(admin.ModelAdmin):
+    """
+    Message Scope Admin
+    """
+    list_display = ('id', "scope", "name")
+    search_fields = ('scope', 'name')
+
+
 # 注册Model到admin中
 admin.site.register(UserProfile, UserModelAdmin)
+admin.site.register(MessageScope, MessageScopeAdmin)

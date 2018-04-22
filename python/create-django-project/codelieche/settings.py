@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 第三方app
     'rest_framework',
     'corsheaders',  # 跨域访问
+    'django_filters',
     # 自己写的app
     'account',
     'modellog'

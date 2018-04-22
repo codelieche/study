@@ -13,6 +13,8 @@ urlpatterns = [
     path('group/', include(arg=('account.urls.group', 'account'), namespace='group')),
     # Account User Api
     path('user/', include(arg=("account.urls.user", 'account'), namespace="user")),
+    # Account Message Api
+    path('message/', include(arg=('account.urls.message', 'account'), namespace="message")),
     # 测试api
     path('test', TestView.as_view(), name="test"),
 ]
