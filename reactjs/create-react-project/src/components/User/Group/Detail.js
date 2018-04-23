@@ -59,7 +59,7 @@ export default class UserGroupDetail extends React.Component {
         </Breadcrumb>
         <div className="main">
           <Row gutter={16}>
-            <Col xs={{ span: 24 }} sm={{ span: 12 }}>
+            <Col xs={{ span: 24 }} sm={{ span: 16 }}>
               <Row className="title">
                 <h4>用户组详情</h4>
               </Row>
