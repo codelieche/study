@@ -45,11 +45,13 @@ class MessageListView(generics.ListAPIView):
         # 第2步：获取到type【read、unread、all】
         _type = self.request.GET.get('type', 'all')
         if _type == 'read':
-            queryset = Message.objects.filter(user=user, is_deleted=False, unread=False)
+            queryset = Message.objects.filter(user=user, is_deleted=False, unread=False)\
+                .order_by('-id')
         elif _type == 'unread':
-            queryset = Message.objects.filter(user=user, is_deleted=False, unread=True)
+            queryset = Message.objects.filter(user=user, is_deleted=False, unread=True)\
+                .order_by('-id')
         else:
-            queryset = Message.objects.filter(user=user, is_deleted=False)
+            queryset = Message.objects.filter(user=user, is_deleted=False).order_by('-id')
 
         # 第3步：返回结果集
         return queryset

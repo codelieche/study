@@ -37,7 +37,7 @@ class BaseForm extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     // 由于最开始的editor页面穿过来的data是空，后面editro页面重新获取了group数据，重新传递过来
-    if (nextProps.data !== prevState.data) {
+    if (nextProps.data && nextProps.data !== prevState.data) {
       return {
         // group的数据
         data: nextProps.data,
