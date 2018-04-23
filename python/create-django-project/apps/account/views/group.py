@@ -24,7 +24,7 @@ class GroupListView(generics.ListAPIView):
     pagination_class = None
 
 
-class GroupCreateView(generics.CreateAPIView):
+class GroupCreateView(LoggingViewSetMixin, generics.CreateAPIView):
     """
     Group Create
     """

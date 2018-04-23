@@ -7,6 +7,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { Row, Col, Breadcrumb } from "antd";
+import ModelLogs from '../../Base/ModelLogs';
 
 export default class UserGroupDetail extends React.Component {
   constructor(props) {
@@ -76,6 +77,9 @@ export default class UserGroupDetail extends React.Component {
                   </dd>
                 </dl>
               </div>
+            </Col>
+            <Col xs={{ span: 24 }} sm={{ span: 8 }} >
+              <ModelLogs app="auth" model='group' id={this.state.id} />
             </Col>
           </Row>
         </div>
