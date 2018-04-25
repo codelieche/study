@@ -11,6 +11,7 @@ class Tag(models.Model):
     name = models.CharField(verbose_name="标签", max_length=40, blank=True)
     description = models.CharField(verbose_name="描述", max_length=256, blank=True,
                                    null=True)
+    is_hot = models.BooleanField(verbose_name="热门", default=False, blank=True)
     is_deleted = models.BooleanField(verbose_name="删除", default=False, blank=True)
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -66,6 +67,7 @@ class ObjectTag(models.Model):
     app_label = models.CharField(verbose_name="App", max_length=40)
     model = models.CharField(verbose_name="Model", max_length=40)
     object_id = models.IntegerField(verbose_name="对象ID")
+    is_deleted = models.BooleanField(verbose_name="删除", default=False, blank=True)
 
     def __str__(self):
         return "{}_{}".format(self.model, self.tag.tag)
