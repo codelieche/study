@@ -5,4 +5,7 @@ urlpatterns = [
     # 前缀：/api/v1/tags/
     # tag api
     path('tag/', include(arg=("tags.urls.tag", "tags"), namespace="tag")),
+
+    # Object Tag Api
+    path('objecttag/', include(arg=("tags.urls.objecttag", "tags"), namespace="objecttag")),
 ]

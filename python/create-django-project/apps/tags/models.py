@@ -70,7 +70,7 @@ class ObjectTag(models.Model):
     is_deleted = models.BooleanField(verbose_name="删除", default=False, blank=True)
 
     def __str__(self):
-        return "{}_{}".format(self.model, self.tag.tag)
+        return "{}_{}".format(self.model, self.tagvalue.tag)
 
     class Meta:
         verbose_name = "对象标签"
