@@ -28,3 +28,16 @@ class ObjectTagModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ObjectTag
         fields = ("id", "tag", "value", "app_label", "model", "object_id")
+
+
+class ObjectTagValueSerializer(serializers.ModelSerializer):
+    """
+    Object TagValue Model Serializer
+    """
+    tagvalue_id = serializers.IntegerField(source="tagvalue.pk")
+    tag = serializers.CharField(source="tagvalue.tag.tag")
+    value = serializers.CharField(source="tagvalue.value")
+
+    class Meta:
+        model = ObjectTag
+        fields = ("tagvalue_id", "tag", "value")

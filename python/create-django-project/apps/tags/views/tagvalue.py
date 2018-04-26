@@ -24,4 +24,4 @@ class TagValueListApiView(generics.ListAPIView):
     filter_fields = ("tag", "tag__tag")
     search_fields = ("tag__tag", "value")
     ordering_fields = ("id", "tag")
-    ordering = ("id")
+    ordering = ("id",)

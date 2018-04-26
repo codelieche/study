@@ -10,7 +10,11 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from tags.models import Tag, TagValue, ObjectTag
-from tags.serializers.objecttag import ObjectTagCreateSerializer, ObjectTagModelSerializer
+from tags.serializers.objecttag import (
+    ObjectTagCreateSerializer,
+    ObjectTagModelSerializer,
+    ObjectTagValueSerializer
+)
 
 
 class ObjectTagCreateApiView(APIView):
@@ -64,3 +68,14 @@ class ObjectTagListApiView(generics.ListAPIView):
     search_fields = ("tagvalue_value",)
     ordering_fields = ("id", "tagvalue")
     ordering = ("id",)
+
+
+class ObjectTagValueListApiView(generics.ListAPIView):
+    """
+    列出对象的TagValue列表
+    """
+    serializer_class = ObjectTagValueSerializer
+
+    def get_queryset(self):
+        queryset = ObjectTag.objects.filter(**self.kwargs).order_by("id")
+        return queryset
