@@ -75,6 +75,7 @@ class ObjectTagValueListApiView(generics.ListAPIView):
     列出对象的TagValue列表
     """
     serializer_class = ObjectTagValueSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = ObjectTag.objects.filter(**self.kwargs).order_by("id")
