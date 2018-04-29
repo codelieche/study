@@ -7,10 +7,13 @@ body {
     font-size: 14px;
 }
 
+// 引入变量
+@import './less/variables';
+
 .sider{
     // 设置侧边栏的背景色
     overflow: auto;
-    background: #333744;
+    background: @sider-background-color;
 }
 
 // 引入基础样式
