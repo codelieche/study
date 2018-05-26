@@ -10,6 +10,7 @@
          font-size: 16px;
          line-height: 35px;
      }
+     border-bottom: 1px solid @sider-background-color;
 }
 
 /* 左边菜单的样式 */
@@ -51,8 +52,13 @@
                 // font-size: 14px;
             }
             &:hover {
-                background: @sub-menu-item-active-bgc;
+                // background: @sub-menu-item-active-bgc;
+                background: @sub-menu-item-hover-bgc;
             }
+        }
+
+        a.active .top-menu-title:hover{
+                background: @sub-menu-item-active-bgc;
         }
 
         ul {
@@ -136,7 +142,16 @@
             transform: rotate(180deg) scale(0.75);
         }
     }
-    .top-menu .top-menu-title {
+    a {
+        color : #fff;
+        text-decoration: none;
+        display: block;
+        &.active {
+        background-color: @sub-menu-item-active-bgc;
+        }
+    }
+    // .top-menu.no-subs是不需要尖角符号的
+    .top-menu.subs .top-menu-title {
         .title {
             &:after {
                 /* title 后面的尖角符号 */

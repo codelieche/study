@@ -97,7 +97,6 @@ var navData = [
             }
         ]
     },
-
     {
         icon: 'team',
         key: 'user',
@@ -129,6 +128,18 @@ var navData = [
                 title: '退出',
             },
         ]
+    },
+    {
+        icon: "question-circle-o",
+        key: "help",
+        title: "帮助中心",
+        url: "/help",
+    },
+    {
+        icon: "home",
+        key: "test",
+        title: "测试页面",
+        url: "/test",
     }
 ]
 
