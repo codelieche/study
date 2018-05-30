@@ -44,7 +44,7 @@ class UserMessage extends React.Component {
     // 这个时候需要微米的Row布局使用flex布局
     // 内部一个设置指定宽度，另外一个设置flex为1，这样页面才会正常，否则会出现不正常情况
     return (
-      <Row style={{ display: "flex", minHeight: "80vh", overflow: "auto" }}>
+      <Row style={{ display: "flex", overflow: "auto" }}>
         <Col span={4} className="right-nav">
           <div className="nav-title">
             <h3>消息中心</h3>
