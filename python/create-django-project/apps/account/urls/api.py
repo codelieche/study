@@ -15,6 +15,9 @@ urlpatterns = [
     path('user/', include(arg=("account.urls.user", 'account'), namespace="user")),
     # Account Message Api
     path('message/', include(arg=('account.urls.message', 'account'), namespace="message")),
+    # 权限
+    path('permission/', include(arg=('account.urls.permission', 'account'),
+                                namespace='permission')),
     # 测试api
     path('test', TestView.as_view(), name="test"),
 ]
