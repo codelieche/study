@@ -19,6 +19,7 @@ class BaseForm extends React.Component {
     super(props);
     //  先处理传递过来的data
     var data = this.props.data ? this.props.data : {};
+    console.log(data);
     this.state = {
       sourceData: [],
       data: data,
@@ -26,13 +27,20 @@ class BaseForm extends React.Component {
       //  穿梭框选中的key和目标keys
       selectedKeys: [],
       //  右边表单中Target选中的keys
-      targetKeys: data.user_set ? data.user_set : []
+      targetKeys: data.user_set ? data.user_set : [],
+
+      // 权限相关的数据
+      transferPermisionDataSource: [],
+      selectedPermissionKeys: [],
+      targetPermissionKeys: data.permissions ? data.permissions : [],
     };
   }
 
   componentDidMount() {
     //  获取所有用户的列表
     this.fetchAllUserData();
+    // 获取所有权限的列表
+    this.fetchAllPermissionData();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -42,7 +50,10 @@ class BaseForm extends React.Component {
         // group的数据
         data: nextProps.data,
         // 选中的user数据
-        targetKeys: nextProps.data.user_set
+        targetKeys: nextProps.data.user_set,
+        // 选择的权限数据
+        targetPermissionKeys: nextProps.data.permissions ? nextProps.data.permissions : [],
+
       };
     } else {
       return null;
@@ -87,6 +98,32 @@ class BaseForm extends React.Component {
     // fetch end
   }
 
+  fetchAllPermissionData() {
+    // 获取所有用户列表
+    const url = "http://127.0.0.1:8080/api/v1/account/permission/all";
+    fetch(url, { credentials: "include" })
+      .then(response => response.json())
+      .then(data => {
+        if (data instanceof Array) {
+          // 获取的数据是数组才ok
+          this.permissions = data;
+          // 生成穿梭框左边的源数据[{key: id, title: username}]
+          let transferPermissionDataSource = data.map(item => ({
+            key: item.id,
+            title: `${item.codename}【${item.app_model}】`
+          }));
+          // 修改状态：设置穿梭框源数据和选中的key的值
+          this.setState({
+            transferPermissionDataSource: transferPermissionDataSource
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // fetch end
+  }
+
   // 穿梭框
   handleTransferSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     // 处理穿梭框选中item的操作
@@ -96,10 +133,24 @@ class BaseForm extends React.Component {
     });
   };
 
+  handlePermissionTransferSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
+    // 处理穿梭框选中item的操作
+    // 当鼠标点击穿梭框的内容的时候，需要修改下选中的key的列表的值
+    this.setState({
+      selectedPermissionKeys: [...sourceSelectedKeys, ...targetSelectedKeys]
+    });
+  };
+
   handleTransferChange = (nextTargetkeys, direction, moveKeys) => {
     // 处理穿梭框左右穿梭的函数
     // 把左边移动到邮编，右边移到左右的时候，主要就是改变右边的targetKeys的值
     this.setState({ targetKeys: nextTargetkeys });
+  };
+
+  handlePermissionTransferChange = (nextTargetkeys, direction, moveKeys) => {
+    // 处理穿梭框左右穿梭的函数
+    // 把左边移动到邮编，右边移到左右的时候，主要就是改变右边的targetKeys的值
+    this.setState({ targetPermissionKeys: nextTargetkeys });
   };
 
   render() {
@@ -177,6 +228,31 @@ class BaseForm extends React.Component {
                   onChange={this.handleTransferChange}
                   onSelectChange={this.handleTransferSelectChange}
                   titles={["所有用户", "组成员"]}
+                  showSearch
+                  render={item => item.title}
+                />
+              )}
+            </Form.Item>
+
+            <Form.Item {...transferItemLayout}>
+              {getFieldDecorator("permissions", {
+                initialValue: this.state.data.permissions
+                  ? this.state.data.permissions
+                  : []
+              })(
+                <Transfer
+                  listStyle={{
+                    maxWidth: 300,
+                    width: "43%",
+                    minHeight: 250,
+                    overflow: "auto"
+                  }}
+                  dataSource={this.state.transferPermissionDataSource}
+                  targetKeys={this.state.targetPermissionKeys}
+                  selectedKeys={this.state.selectedPermissionKeys}
+                  onChange={this.handlePermissionTransferChange}
+                  onSelectChange={this.handlePermissionTransferSelectChange}
+                  titles={["所有权限", "组权限"]}
                   showSearch
                   render={item => item.title}
                 />
