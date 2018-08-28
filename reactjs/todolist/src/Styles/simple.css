@@ -1,0 +1,48 @@
+.container {
+    margin: 10px auto;
+    width: 50%;
+}
+
+.container.todolist {
+    padding: 10px;
+}
+
+.todolist .header {
+    padding-bottom: 15px;
+    font-size: 15px;
+}
+
+.todolist .header input {
+    font-size: 14px;
+    width: 300px;
+    line-height: 24px;
+    padding: 2px 5px;
+}
+
+.todolist .header button {
+    font-size: 15px;
+    margin-left: 10px;
+
+}
+
+.todolist .list {
+    color: #444;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    width: 300px;
+    border-radius: 5px;
+}
+
+.todolist .list .item {
+    padding: 5px 0;
+}
+.todolist .list .item + .item {
+    border-top: 1px dashed #ddd;
+}
+
+.todolist .list .no-items {
+    width: 100%;
+    padding: 20px 0px;
+    color: #999;
+    text-align: center;
+}
