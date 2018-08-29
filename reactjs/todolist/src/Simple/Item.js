@@ -8,12 +8,20 @@ class TodoItem extends Component {
         super(props);
         this.state = {
             data: this.props.data,
+            finished: false,
         }
     }
 
+    handleClick = () => {
+        this.setState(prevState => {
+            return {finished: ! prevState.finished}
+        });
+    }
+
     render(){
+        var itemClass = this.state.finished ? "item finished" : "item";
         return (
-            <div className="item">
+            <div className={itemClass} onClick={this.handleClick}>
                 {this.state.data}
             </div>
         );

@@ -36,6 +36,12 @@
 .todolist .list .item {
     padding: 5px 0;
 }
+
+.todolist .list .item.finished {
+    text-decoration: line-through;
+    color: #999;
+}
+
 .todolist .list .item + .item {
     border-top: 1px dashed #ddd;
 }
