@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+    "name": "获取图片链接",
+    "version": "0.1.0",
+    "description": "获取页面中的图片链接",
+    "icons": {
+        "16": "images/icon.png",
+        "48": "images/icon.png"
+    },
+    "background": {
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_title": "Scrapy Images",
+        "default_popup": "pages/popup.html"
+    },
+    "content_scripts": [{
+        "js": ["js/scrapy.js"],
+        "matches": ["<all_urls>"]
+    }
+    ],
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ]
+}
