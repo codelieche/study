@@ -32,7 +32,7 @@ class MessageListView(generics.ListAPIView):
 
     # 搜索和过滤
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filter_fields = ('scope', 'unread')
+    filter_fields = ('category', 'unread')
     search_fields = ('title', 'content')
     ordering_fields = ('id', 'time_added')
     ordering = ('-time_added',)
@@ -42,16 +42,8 @@ class MessageListView(generics.ListAPIView):
         # 用户只可以看到自己的消息列表
         user = self.request.user
 
-        # 第2步：获取到type【read、unread、all】
-        _type = self.request.GET.get('type', 'all')
-        if _type == 'read':
-            queryset = Message.objects.filter(user=user, is_deleted=False, unread=False)\
-                .order_by('-id')
-        elif _type == 'unread':
-            queryset = Message.objects.filter(user=user, is_deleted=False, unread=True)\
-                .order_by('-id')
-        else:
-            queryset = Message.objects.filter(user=user, is_deleted=False).order_by('-id')
+        # 第2步：获取到是否已读：unread=0/1(已读/未读)
+        queryset = Message.objects.filter(user=user, is_deleted=False).order_by('-id')
 
         # 第3步：返回结果集
         return queryset

@@ -156,7 +156,7 @@ STATIC_URL = '/static/'
 # 正式环境static文件要收集到STATIC_ROOT中【项目根目录的上一级】
 # STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "../static"))
 
-# 开发环境使用STTICFILES_DIRS
+# 开发环境使用STATICFILES_DIRS
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -185,7 +185,7 @@ AUTHENTICATION_BACKENDS = (
 # LDAP配置，有需要可以查看django ldap相关文档
 
 # 设置session过期时间
-SESION_SAVE_EVERY_REQUEST = True
+SESSION_SAVE_EVERY_REQUEST = True
 # 设置SESSION COOKIE过期时间 1h
 SESSION_COOKIE_AGE = 60 * 60
 

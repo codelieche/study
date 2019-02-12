@@ -47,25 +47,25 @@ User = get_user_model()
 # 注意这句是要放在class UserProfile后面的
 
 
-class MessageScope(models.Model):
+class MessageCategory(models.Model):
     """
-    消息范围
+    消息类型
     """
-    scope = models.SlugField(verbose_name="范围", max_length=10)
-    name = models.CharField(verbose_name="范围名称", max_length=10, blank=True)
+    category = models.SlugField(verbose_name="类型", max_length=10)
+    name = models.CharField(verbose_name="类型名称", max_length=10, blank=True)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if not self.name:
-            self.name = self.scope
+            self.name = self.category
             super().save(force_insert=force_insert, force_update=force_update,
                          using=using, update_fields=update_fields)
 
     def __str__(self):
-        return "Message:{}".format(self.scope)
+        return "Message:{}".format(self.category)
 
     class Meta:
-        verbose_name = "消息范围"
+        verbose_name = "消息类型"
         verbose_name_plural = verbose_name
 
 
@@ -75,9 +75,9 @@ class Message(models.Model):
     """
     user = models.ForeignKey(to=User, verbose_name='用户', on_delete=models.CASCADE)
     sender = models.CharField(max_length=15, verbose_name="发送者", default='system', blank=True)
-    # 消息类型，想用type，但是还是用scope，type和types是mysql的预保留字
-    scope = models.ForeignKey(to=MessageScope, verbose_name="消息范围", blank=True,
-                              on_delete=models.CASCADE)
+    # 消息类型
+    category = models.ForeignKey(to=MessageCategory, verbose_name="消息范围", blank=True,
+                                 on_delete=models.CASCADE)
     title = models.CharField(max_length=100, verbose_name="消息标题")
     content = models.CharField(max_length=512, verbose_name="消息内容", blank=True)
     link = models.CharField(max_length=128, verbose_name="链接", blank=True, null=True)
@@ -90,10 +90,10 @@ class Message(models.Model):
         # 当content为空的时候，让其等于title
         if not self.content:
             self.content = self.title
-        # 设置scope
-        if not self.scope:
-            scope, created = MessageScope.objects.get_or_create(scope="default")
-            self.scope = scope
+        # 设置category
+        if not self.category:
+            category, created = MessageCategory.objects.get_or_create(category="default")
+            self.category = category
 
         return super().save(force_insert=force_insert, force_update=force_update,
                             using=using, update_fields=update_fields)
