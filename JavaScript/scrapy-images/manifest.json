@@ -16,12 +16,11 @@
         "default_popup": "pages/popup.html"
     },
     "content_scripts": [{
-        "js": ["js/scrapy.js"],
+        "js": ["js/jquery-3.3.1.min.js", "js/scrapy.js"],
         "matches": ["<all_urls>"]
     }
     ],
     "permissions": [
-        "tabs",
-        "activeTab"
+        "tabs"
     ]
 }
