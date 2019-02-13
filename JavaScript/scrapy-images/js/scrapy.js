@@ -43,7 +43,10 @@ function ScrapyImages(url){
             }
             
         }
-        results.push(imageSrc);
+        // 判断元素是否在数组中
+        if(results.indexOf(imageSrc) < 0){
+            results.push(imageSrc);
+        }
     });
 
     return results;

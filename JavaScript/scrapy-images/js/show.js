@@ -4,6 +4,9 @@ $(function(){
     var results = background.results;
     // alert(results);
     if(results && results.length > 0){
+        // 对数组去重操作: 在scrapy中去重，后续就不用去重了
+        // $.unique(results.sort());
+
         for(var i=0; i <= results.length; i++){
             // alert(results[i]);
             var span1 = $("<span></span>").text(results[i]);

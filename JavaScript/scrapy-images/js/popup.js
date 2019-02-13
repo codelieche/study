@@ -15,7 +15,7 @@ function scrapyTabImages(showImages, openNewTab){
                 // alert(response.results);
                 if(response && response.results){
                     var results = response.results;
-
+                    
                     // 是否在popup页面显示图片
                     if(showImages){
                         for(var i=0; i <= results.length; i++){
