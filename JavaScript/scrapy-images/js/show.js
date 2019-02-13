@@ -1,0 +1,18 @@
+$(function(){
+    // 获取到background的Page
+    var background = chrome.extension.getBackgroundPage();
+    var results = background.results;
+    // alert(results);
+    if(results && results.length > 0){
+        for(var i=0; i <= results.length; i++){
+            // alert(results[i]);
+            var span1 = $("<span></span>").text(results[i]);
+            var img1 = $("<img />").attr("src", results[i]);
+            // alert(img1)
+            $(".images").append(span1, img1);
+        };
+    }else{
+        var msg = $("<span></span>").text("图片为空");
+        $(".images").append(msg);
+    }
+});
