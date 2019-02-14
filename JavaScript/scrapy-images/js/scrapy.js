@@ -36,6 +36,8 @@ function ScrapyImages(url){
         if(imageSrc && (! imageSrc.startsWith("http")) ){
             if(imageSrc.startsWith("//")){
                 imageSrc = imageSrc.replace("//", "http://");
+            }else if(imageSrc.startsWith("data")){
+                // 无需处理
             }else{
                 var re = new RegExp("(htt.*?:\/\/.*?)\/.*");
                 var host = re.exec(url)[1];
