@@ -28,15 +28,22 @@ function scrapyTabImages(showImages, openNewTab){
                     }
                     
                     // 把results传给background的Page
-                    var background = chrome.extension.getBackgroundPage();
-                    background.results = results;
-
-                    // 是否打开新的页面查看图片
-                    if(openNewTab){
-                      // 跳转到查看页面
-                      chrome.tabs.create({"url": "pages/show.html"});
-                    }
-                   
+                    // var background = chrome.extension.getBackgroundPage();
+                    chrome.runtime.getBackgroundPage(function(backgroundPage){
+                        if(backgroundPage){
+                            backgroundPage.results = results;
+    
+                            // 是否打开新的页面查看图片
+                            if(openNewTab){
+                              // 跳转到查看页面
+                              chrome.tabs.create({"url": "pages/show.html"});
+                            }
+    
+                        }else{
+                            alert("获取background出错", backgroundPage);
+                        }
+                    });
+                    
 
                 }else{
                     var msg = $("<span></span>").text("返回的结果不规范！");
@@ -65,6 +72,7 @@ $(function(){
 
     $("#show").click(function(){
         // console.log("点击了查看图片按钮");
+        // alert("show btn click");
         scrapyTabImages(false, true);
 
         // chrome.tabs.create({"url": "pages/show.html"});
