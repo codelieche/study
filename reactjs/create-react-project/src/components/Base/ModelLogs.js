@@ -40,7 +40,7 @@ class LogItem extends React.Component {
             if (message instanceof Array) {
                 messageElement = message.map((item, index) => {
                     var valueOld = item.value_old instanceof Array ? item.value_old.join(',') : item.value_old;
-                    var valueNew = item.value_new instanceof Array ? item.value_new.join(',') : item.value_new.toString();
+                    var valueNew = item.value_new instanceof Array ? item.value_new.join(',') : (item.value_new ? item.value_new.toString() : "null");
                     return (
                         <div className="changed-message" key={index}>
                             <div className="content">
