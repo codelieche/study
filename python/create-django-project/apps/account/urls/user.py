@@ -4,7 +4,7 @@ from django.urls import path
 from account.views.user import (
     UserListView,
     UserAllListView,
-    UserDetailView
+    UserDetailView,
 )
 
 

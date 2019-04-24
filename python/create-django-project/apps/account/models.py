@@ -107,3 +107,29 @@ class Message(models.Model):
     class Meta:
         verbose_name = "用户消息"
         verbose_name_plural = verbose_name
+
+
+class SafeLog(models.Model):
+    """
+    安全日志
+    1. 用户登录的时候记录：【成功/失败都记录】
+    2. 用户改密码的时候记录
+    """
+    CATEGORY_CHOICES = (
+        ("default", "Default"),
+        ("login", "登录"),
+        ("safe", "安全"),
+        ("other", "其它")
+    )
+    user = models.ForeignKey(to=User, verbose_name="用户")
+    ip = models.GenericIPAddressField(verbose_name="操作IP")
+    devices = models.CharField(verbose_name="操作设备", max_length=256, blank=True, null=True)
+    content = models.CharField(verbose_name="内容", max_length=256)
+    category = models.CharField(verbose_name="类型", max_length=10, choices=CATEGORY_CHOICES,
+                                blank=True, default="default")
+    is_ok = models.BooleanField(verbose_name="是否成功", blank=True, default=False)
+    time_added = models.DateTimeField(verbose_name="添加时间", auto_now_add=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "用户日志"
+        verbose_name_plural = verbose_name

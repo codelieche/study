@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from rest_framework import serializers
 
-from account.models import User
+from account.models import User, SafeLog
 
 
 class UserLoginSerializer(serializers.Serializer):
@@ -42,3 +42,15 @@ class UserDetailSerializer(serializers.ModelSerializer):
                   'dingding', 'wechart',
                   'is_superuser', 'last_login', 'is_deleted')
         read_only_fields = ('id', 'username', 'last_login')
+
+
+class SafeLogModelSerializer(serializers.ModelSerializer):
+    """
+    Safe Log Model Serializer
+    """
+    user = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
+    category_verbose = serializers.CharField(read_only=True, required=False, source="get_category_display")
+
+    class Meta:
+        model = SafeLog
+        fields = ("id", "user", "category", "content", "category_verbose", "ip", "devices", "is_ok", "time_added")

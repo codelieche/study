@@ -3,6 +3,7 @@ from django.urls import path, include
 
 from account.views.user import LoginView, account_logout
 from account.views.account import TestView
+from account.views.user import SafeLogListApiView
 
 urlpatterns = [
     # 前缀：/api/v1/account/
@@ -18,6 +19,8 @@ urlpatterns = [
     # 权限
     path('permission/', include(arg=('account.urls.permission', 'account'),
                                 namespace='permission')),
+    # 安全日志
+    path('safelog/list', SafeLogListApiView.as_view(), name="safelog_list"),
     # 测试api
     path('test', TestView.as_view(), name="test"),
 ]
